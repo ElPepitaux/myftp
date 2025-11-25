@@ -20,10 +20,13 @@ FetchContent_MakeAvailable(Boost)
 
 include_directories(headers)
 
-file(GLOB SOURCES "sources/*.cpp")
+file(GLOB SOURCES "sources/common/*.cpp")
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+file(GLOB SERVER_SOURCES "sources/server/*.cpp")
+add_executable(${PROJECT_NAME}server ${SOURCES} ${SERVER_SOURCES})
+target_link_libraries(${PROJECT_NAME}server PRIVATE Boost::asio Boost::system)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Boost::asio Boost::system)
-
+file(GLOB CLIENT_SOURCES "sources/client/*.cpp")
+add_executable(${PROJECT_NAME}client ${SOURCES} ${CLIENT_SOURCES})
+target_link_libraries(${PROJECT_NAME}client PRIVATE Boost::asio Boost::system)
 
