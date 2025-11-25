@@ -79,6 +79,7 @@ void Client::run()
             close();
             break;
         }
+        input += CRLF;
         write(input);
     }
 }

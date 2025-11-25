@@ -13,6 +13,9 @@
 #include <string>
 #include <iostream>
 
+#define CRLF "\r\n"
+
+
 class Client {
     public:
         Client(const std::string &host, unsigned short port);

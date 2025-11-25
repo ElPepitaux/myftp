@@ -9,7 +9,7 @@
 
 #include <boost/asio.hpp>
 #include <thread>
-#include <vector>
+#include <list>
 #include <memory>
 
 #include "server/Connection.hpp"
@@ -32,7 +32,7 @@ class Server {
         boost::asio::io_context _ioContext;
         boost::asio::ip::tcp::acceptor _acceptor;
         std::thread _thread;
-        std::vector<std::shared_ptr<Connection>> _connections;
+        std::list<std::shared_ptr<Connection>> _connections;
         bool _isRunning;
 
     private:

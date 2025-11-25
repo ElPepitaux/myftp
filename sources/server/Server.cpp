@@ -35,8 +35,18 @@ void Server::handleAccept(const boost::system::error_code &error,
 {
     if (!error) {
         auto connection = std::make_shared<Connection>(std::move(socket));
+        _connections.push_front(connection);
         connection->read();
-        _connections.push_back(connection);
+        connection->setOnMessageReceived(
+            [connection](const std::string &message) {
+                std::cout << "Received message: " << message << std::endl;
+                connection->write("Echo: " + message + "\n\r");
+            });
+        connection->setOnDisconnected(
+            [connection, this]() {
+                std::cout << "Client disconnected." << std::endl;
+                _connections.remove(connection);
+            });
         std::cout << "New connection accepted." << std::endl;
     } else {
         std::cerr << "Error accepting connection: " << error.message() << std::endl;
