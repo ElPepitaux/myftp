@@ -12,7 +12,21 @@
 #include <vector>
 #include <memory>
 #include "Connection.hpp"
+#include <exception>
 
+class ExceptionHandler : public std::exception {
+    public:
+        ExceptionHandler(const std::string& message, int errorCode) : _message(message), _errorCode(errorCode) {}
+        const char* what() const noexcept override {
+            return _message.c_str();
+        }
+        int getErrorCode() const noexcept {
+            return _errorCode;
+        }
+    private:
+        std::string _message;
+        int _errorCode;
+};
 
 class handler {
     public:
