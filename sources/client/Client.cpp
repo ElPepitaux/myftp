@@ -24,7 +24,7 @@ Client::Client(const std::string &host, unsigned short port)
 
         _connection->setOnMessageReceived(
             [](const std::string &message) {
-                std::cout << "Received: " << message;
+                std::cout << message;
             }
         );
         _connection->setOnDisconnected(
@@ -62,7 +62,6 @@ void Client::run()
     while (_isConnected) {
         std::string input;
         std::getline(std::cin, input);
-        std::cout << "Sending: " << input << std::endl;
         if (input == "exit") {
             close();
             break;

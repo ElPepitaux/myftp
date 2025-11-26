@@ -7,15 +7,17 @@
 
 #include "ChainResponsibility.hpp"
 
-ChainResponsibility::ChainResponsibility()
+void handler::setNext(const std::shared_ptr<handler> &nextHandler)
 {
+    _nextHandler = nextHandler;
 }
 
-ChainResponsibility::~ChainResponsibility()
+std::shared_ptr<handler> handler::getNext()
 {
+    return _nextHandler;
 }
 
-void ChainResponsibility::handleRequest(const std::string& route, const std::string& request, Connection& connection)
+void ChainResponsibility::handleRequest(const std::string& route, const std::vector<std::string>& request, Connection& connection)
 {
     try {
         auto it = _routes.find(route);

@@ -16,7 +16,7 @@
 
 ## Server Side
 
-- [ ] USER <username>
+- [x] USER <username>
 - [ ] PASS <password>
 - [ ] CWD <directory>
 - [ ] LIST
@@ -26,3 +26,6 @@
 - [ ] QUIT
 
 
+### Middleware Made
+
+- [x] Nbr of Arguments [link](sources/server/commands/Middleware.cpp#L10)

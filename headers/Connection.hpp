@@ -30,12 +30,18 @@ class Connection {
 
         void close();
 
+        bool isAuthenticated() const noexcept;
+
+        void setAuthenticated(bool isAuthenticated) noexcept;
+
     protected:
         boost::asio::ip::tcp::socket _socket;
         std::vector<char> _readBuffer;
 
         std::function<void(const std::string&)> _onMessageReceived;
         std::function<void()> _onDisconnected;
+
+        bool _isAuthenticated;
 
     private:
 };

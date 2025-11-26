@@ -12,7 +12,9 @@
 #include <list>
 #include <memory>
 
+#include "Utils.hpp"
 #include "Connection.hpp"
+#include "server/ServerChainResponsibility.hpp"
 
 class Server {
     public:
@@ -32,8 +34,10 @@ class Server {
         boost::asio::io_context _ioContext;
         boost::asio::ip::tcp::acceptor _acceptor;
         std::thread _thread;
-        std::list<std::shared_ptr<Connection>> _connections;
         bool _isRunning;
+
+        std::list<std::shared_ptr<Connection>> _connections;
+        std::shared_ptr<ServerChainResponsibility> _chainResponsibility;
 
     private:
 };

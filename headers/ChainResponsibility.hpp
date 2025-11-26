@@ -31,17 +31,22 @@ class ExceptionHandler : public std::exception {
 class handler {
     public:
         virtual ~handler() = default;
-        virtual void setNext(handler* nextHandler) = 0;
-        virtual handler* getNext() const = 0;
-        virtual void handle(const std::string& request, Connection& connection) = 0;
+        void setNext(const std::shared_ptr<handler> &nextHandler);
+        std::shared_ptr<handler> getNext();
+
+        virtual void handle(const std::vector<std::string>& request, Connection& connection) = 0;
+    protected:
+        std::shared_ptr<handler> _nextHandler;
+    private:
 };
 
 class ChainResponsibility {
     public:
-        ChainResponsibility();
-        ~ChainResponsibility();
+        virtual ~ChainResponsibility() = default;
 
-        void handleRequest(const std::string& route, const std::string& request, Connection& connection);
+        virtual void setupRoutes() = 0;
+
+        void handleRequest(const std::string& route, const std::vector<std::string>& request, Connection& connection);
 
     protected:
         std::map<std::string, std::shared_ptr<handler>> _routes;

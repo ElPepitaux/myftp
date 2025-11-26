@@ -14,6 +14,8 @@ Server::Server(unsigned short port)
     startAccept();
     _thread = std::thread([this]() { _ioContext.run(); });
     std::cout << "Server started on port " << port << std::endl;
+    _chainResponsibility = std::make_shared<ServerChainResponsibility>();
+    _chainResponsibility->setupRoutes();
 }
 
 Server::~Server()
@@ -36,11 +38,12 @@ void Server::handleAccept(const boost::system::error_code &error,
     if (!error) {
         auto connection = std::make_shared<Connection>(std::move(socket));
         _connections.push_front(connection);
+        connection->write("220 Welcome to the POWA FTP server\r\n");
         connection->read();
         connection->setOnMessageReceived(
-            [connection](const std::string &message) {
-                std::cout << "Received message: " << message << std::endl;
-                connection->write("Echo: " + message + "\n\r");
+            [connection, this](const std::string &message) {
+                std::vector<std::string> responses = Utils::splitStringWhitespace(message);
+                _chainResponsibility->handleRequest(responses[0], responses, *connection);
             });
         connection->setOnDisconnected(
             [connection, this]() {

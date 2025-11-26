@@ -10,6 +10,7 @@
 Connection::Connection(boost::asio::ip::tcp::socket socket)
     : _socket(std::move(socket))
 {
+    _isAuthenticated = false;
     _readBuffer.resize(1024);
 }
 
@@ -58,4 +59,14 @@ void Connection::read()
 void Connection::close()
 {
     _socket.close();
+}
+
+bool Connection::isAuthenticated() const noexcept
+{
+    return _isAuthenticated;
+}
+
+void Connection::setAuthenticated(bool isAuthenticated) noexcept
+{
+    _isAuthenticated = isAuthenticated;
 }
