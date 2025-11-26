@@ -13,17 +13,15 @@
 #include <string>
 #include <iostream>
 
-#define CRLF "\r\n"
+#include "Connection.hpp"
 
+#define CRLF "\r\n"
 
 class Client {
     public:
         Client(const std::string &host, unsigned short port);
         ~Client();
 
-        void read();
-
-        void write(const std::string &data);
 
         void close();
 
@@ -35,5 +33,7 @@ class Client {
         std::thread _thread;
         std::vector<char> _readBuffer;
         bool _isConnected;
+
+        std::shared_ptr<Connection> _connection;
     private:
 };

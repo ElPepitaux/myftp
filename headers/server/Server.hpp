@@ -12,7 +12,7 @@
 #include <list>
 #include <memory>
 
-#include "server/Connection.hpp"
+#include "Connection.hpp"
 
 class Server {
     public:

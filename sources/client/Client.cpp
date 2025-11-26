@@ -20,7 +20,20 @@ Client::Client(const std::string &host, unsigned short port)
 
         std::cout << "Connected to " << host << ":" << port << std::endl;
         _readBuffer.resize(1024);
-        read();
+        _connection = std::make_shared<Connection>(std::move(_socket));
+
+        _connection->setOnMessageReceived(
+            [](const std::string &message) {
+                std::cout << "Received: " << message;
+            }
+        );
+        _connection->setOnDisconnected(
+            [this]() {
+                std::cout << "Disconnected from server." <<  std::endl;
+                _isConnected = false;
+            }
+        );
+        _connection->read();
 
         _thread = std::thread([this]() {
             _ioContext.run();
@@ -36,35 +49,10 @@ Client::~Client()
     _socket.close();
 }
 
-void Client::read()
-{
-    _socket.async_receive(boost::asio::buffer(_readBuffer),
-        [this](const boost::system::error_code &error, std::size_t bytes_transferred) {
-            if (!error) {
-                std::string data(_readBuffer.data(), bytes_transferred);
-                std::cout << "Received: " << data << std::endl;
-            }
-            read();
-        });
-}
-
-void Client::write(const std::string &data)
-{
-    if (!_isConnected)
-        return;
-
-    boost::asio::async_write(_socket, boost::asio::buffer(data),
-        [this](const boost::system::error_code &error, std::size_t /*bytes_transferred*/) {
-            if (error) {
-                std::cerr << "Error on write: " << error.message() << std::endl;
-            }
-        });
-}
-
 void Client::close()
 {
     _isConnected = false;
-    _socket.close();
+    _connection->close();
     if (_thread.joinable())
         _thread.join();
 }
@@ -80,6 +68,6 @@ void Client::run()
             break;
         }
         input += CRLF;
-        write(input);
+        _connection->write(input);
     }
 }

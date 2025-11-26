@@ -5,7 +5,7 @@
 ** Connection
 */
 
-#include "server/Connection.hpp"
+#include "Connection.hpp"
 
 Connection::Connection(boost::asio::ip::tcp::socket socket)
     : _socket(std::move(socket))
@@ -53,4 +53,9 @@ void Connection::read()
             }
         }
     );
+}
+
+void Connection::close()
+{
+    _socket.close();
 }
