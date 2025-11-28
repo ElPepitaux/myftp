@@ -43,6 +43,11 @@ void Server::handleAccept(const boost::system::error_code &error,
         connection->setOnMessageReceived(
             [connection, this](const std::string &message) {
                 std::vector<std::string> responses = Utils::splitStringWhitespace(message);
+
+                if (responses.empty()) {
+                    connection->write("500 Syntax error, command unrecognized.\r\n");
+                    return;
+                }
                 _chainResponsibility->handleRequest(responses[0], responses, *connection);
             });
         connection->setOnDisconnected(
