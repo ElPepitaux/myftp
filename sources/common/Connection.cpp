@@ -11,6 +11,7 @@ Connection::Connection(boost::asio::ip::tcp::socket socket)
     : _socket(std::move(socket))
 {
     _isAuthenticated = false;
+    _mode = MODE::NONE;
     _readBuffer.resize(1024);
 }
 

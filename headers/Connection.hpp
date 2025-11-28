@@ -22,7 +22,8 @@ class Connection {
 
         enum class MODE {
             ACTIVE,
-            PASSIVE
+            PASSIVE,
+            NONE
         };
 
         void setOnMessageReceived(std::function<void(const std::string&)> callback);
@@ -50,8 +51,6 @@ class Connection {
         const std::string& getDataAddress() const noexcept;
 
         uint16_t getDataPort() const noexcept;
-
-        boost::asio::ip::tcp::socket _dataSocket;
 
     protected:
         boost::asio::ip::tcp::socket _socket;

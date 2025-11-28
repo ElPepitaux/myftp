@@ -23,3 +23,23 @@ void NbrOfArgumentsMiddleware::handle(const std::vector<std::string>& request, C
         _nextHandler->handle(request, connection);
     }
 }
+
+void AuthenticationMiddleware::handle(const std::vector<std::string>& request, Connection& connection)
+{
+    if (!connection.isAuthenticated()) {
+        throw ExceptionHandler("User not authenticated.", 530);
+    }
+    if (_nextHandler) {
+        _nextHandler->handle(request, connection);
+    }
+}
+
+void ChooseModeMiddleware::handle(const std::vector<std::string>& request, Connection& connection)
+{
+    if (connection.getMode() == Connection::MODE::NONE) {
+        throw ExceptionHandler("Transfer mode not set.", 425);
+    }
+    if (_nextHandler) {
+        _nextHandler->handle(request, connection);
+    }
+}

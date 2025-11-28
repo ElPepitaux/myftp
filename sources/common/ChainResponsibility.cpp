@@ -23,6 +23,8 @@ void ChainResponsibility::handleRequest(const std::string& route, const std::vec
         auto it = _routes.find(route);
         if (it != _routes.end()) {
             it->second->handle(request, connection);
+        } else {
+            throw ExceptionHandler("Unknown command.", 500);
         }
     } catch (const ExceptionHandler& e) {
         std::cerr << "Error: " << e.what() << " (Code: " << e.getErrorCode() << ")" << std::endl;

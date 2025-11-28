@@ -27,4 +27,5 @@ void PortHandler::handle(const std::vector<std::string>& request, Connection& co
     uint16_t port = std::stoi(addressParts[4]) * 256 + std::stoi(addressParts[5]);
     connection.setDataAddress(ipAddress);
     connection.setDataPort(port);
+    connection.write("200 PORT command successful." CRLF);
 }

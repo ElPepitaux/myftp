@@ -28,7 +28,11 @@ void ListHandler::handle(const std::vector<std::string>& request, Connection& co
         throw ExceptionHandler("Failed to list directory.", 550);
     }
     connection.write("150 Here comes the directory listing for \"" + path + "\".\r\n");
-    connection.write(listing);
+    if (connection.getMode() == Connection::MODE::ACTIVE) {
+        _sendPortMode(connection, listing);
+    } else {
+        _sendPassiveMode(connection, listing);
+    }
     connection.write("226 Directory send OK.\r\n");
 }
 
@@ -61,4 +65,26 @@ std::string ListHandler::_listDirectoryContent(const std::string& path)
         pclose(pipe);
     }
     return result;
+}
+
+void ListHandler::_sendPortMode(Connection& connection, const std::string& message)
+{
+    try {
+        boost::asio::io_context io_context;
+        boost::asio::ip::tcp::socket dataSocket(io_context);
+        boost::asio::ip::tcp::endpoint endpoint(
+            boost::asio::ip::make_address(connection.getDataAddress()),
+            connection.getDataPort()
+        );
+        dataSocket.connect(endpoint);
+        boost::asio::write(dataSocket, boost::asio::buffer(message));
+        dataSocket.close();
+    } catch (const std::exception& e) {
+        throw ExceptionHandler("Failed to send data in PORT mode: " + std::string(e.what()), 550);
+    }
+}
+
+void ListHandler::_sendPassiveMode(Connection& connection, const std::string& message)
+{
+    // Implementation for sending data in PASSIVE mode
 }

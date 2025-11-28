@@ -18,3 +18,19 @@ class NbrOfArgumentsMiddleware : public handler {
     private:
         int _expectedArgs;
 };
+
+class AuthenticationMiddleware : public handler {
+    public:
+        AuthenticationMiddleware() = default;
+        ~AuthenticationMiddleware() override = default;
+
+        void handle(const std::vector<std::string>& request, Connection& connection) override;
+};
+
+class ChooseModeMiddleware : public handler {
+    public:
+        ChooseModeMiddleware() = default;
+        ~ChooseModeMiddleware() override = default;
+
+        void handle(const std::vector<std::string>& request, Connection& connection) override;
+};

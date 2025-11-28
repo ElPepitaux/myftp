@@ -31,6 +31,8 @@ class ListHandler : public handler {
     protected:
     private:
         std::string _listDirectoryContent(const std::string& path = ".");
+        void _sendPortMode(Connection& connection, const std::string& message);
+        void _sendPassiveMode(Connection& connection, const std::string& message);
 };
 
 
