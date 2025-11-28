@@ -36,3 +36,29 @@ std::vector<std::string> Utils::splitString(const std::string& str, char delimit
     }
     return result;
 }
+
+std::string Utils::getFileContent(const std::string &path)
+{
+    std::string fileContent = "";
+    std::ifstream file(path);
+
+    if (!file.is_open())
+        return fileContent;
+
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
+    fileContent = buffer.str();
+    return fileContent;
+}
+
+bool Utils::writeFileContent(const std::string &path, const std::string &content)
+{
+    std::ofstream file(path);
+    if (!file.is_open())
+        return false;
+
+    file << content;
+    file.close();
+    return true;
+}

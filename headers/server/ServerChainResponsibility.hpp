@@ -13,6 +13,7 @@
 #include "server/commands/PortHandler.hpp"
 #include "server/commands/PassHandler.hpp"
 #include "server/commands/ListHandler.hpp"
+#include "server/commands/StorHandler.hpp"
 
 class ServerChainResponsibility : public ChainResponsibility {
     public:

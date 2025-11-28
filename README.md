@@ -19,9 +19,9 @@
 - [x] USER <username>   Only anonymous user is allowed
 - [x] PASS <password>   Any password is accepted for anonymous user
 - [x] CWD <directory>
-- [ ] LIST
+- [X] LIST
 - [ ] RETR <filename>
-- [ ] STOR <filename>
+- [X] STOR <filename>
 - [ ] DELE <filename>
 - [ ] QUIT
 - [ ] PASV

@@ -34,3 +34,4 @@ class ChooseModeMiddleware : public handler {
 
         void handle(const std::vector<std::string>& request, Connection& connection) override;
 };
+
