@@ -11,6 +11,8 @@
 #include "server/Middleware.hpp"
 #include "server/commands/UserHandler.hpp"
 #include "server/commands/PortHandler.hpp"
+#include "server/commands/PassHandler.hpp"
+#include "server/commands/ListHandler.hpp"
 
 class ServerChainResponsibility : public ChainResponsibility {
     public:
