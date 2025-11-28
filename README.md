@@ -24,6 +24,8 @@
 - [ ] STOR <filename>
 - [ ] DELE <filename>
 - [ ] QUIT
+- [ ] PASV
+- [X] PORT <host-port> (host-port: h1,h2,h3,h4,p1,p2)
 
 
 ### Middleware Made

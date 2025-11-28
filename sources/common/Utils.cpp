@@ -24,3 +24,15 @@ std::vector<std::string> Utils::splitStringWhitespace(const std::string& str)
     }
     return result;
 }
+
+std::vector<std::string> Utils::splitString(const std::string& str, char delimiter)
+{
+    std::vector<std::string> result;
+    std::stringstream ss(str);
+    std::string item;
+
+    while (std::getline(ss, item, delimiter)) {
+        result.push_back(item);
+    }
+    return result;
+}

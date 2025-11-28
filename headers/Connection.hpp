@@ -20,6 +20,11 @@ class Connection {
         Connection(boost::asio::ip::tcp::socket socket);
         ~Connection();
 
+        enum class MODE {
+            ACTIVE,
+            PASSIVE
+        };
+
         void setOnMessageReceived(std::function<void(const std::string&)> callback);
 
         void setOnDisconnected(std::function<void()> callback);
@@ -34,6 +39,20 @@ class Connection {
 
         void setAuthenticated(bool isAuthenticated) noexcept;
 
+        MODE getMode() const noexcept;
+
+        void setMode(MODE mode) noexcept;
+
+        void setDataAddress(const std::string& address) noexcept;
+
+        void setDataPort(uint16_t port) noexcept;
+
+        const std::string& getDataAddress() const noexcept;
+
+        uint16_t getDataPort() const noexcept;
+
+        boost::asio::ip::tcp::socket _dataSocket;
+
     protected:
         boost::asio::ip::tcp::socket _socket;
         std::vector<char> _readBuffer;
@@ -42,6 +61,10 @@ class Connection {
         std::function<void()> _onDisconnected;
 
         bool _isAuthenticated;
+        MODE _mode;
+
+        std::string _dataAddress;
+        uint16_t _dataPort;
 
     private:
 };

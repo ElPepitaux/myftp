@@ -10,6 +10,7 @@
 #include "ChainResponsibility.hpp"
 #include "server/Middleware.hpp"
 #include "server/commands/UserHandler.hpp"
+#include "server/commands/PortHandler.hpp"
 
 class ServerChainResponsibility : public ChainResponsibility {
     public:

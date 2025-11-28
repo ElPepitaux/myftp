@@ -21,4 +21,9 @@ void ServerChainResponsibility::setupRoutes()
     auto userHandler = std::make_shared<UserHandler>();
     nbrOfArgsMiddlewareUser->setNext(userHandler);
     _routes["USER"] = nbrOfArgsMiddlewareUser;
+
+    auto nbrOfArgsMiddlewarePort = std::make_shared<NbrOfArgumentsMiddleware>(2);
+    auto portHandler = std::make_shared<PortHandler>();
+    nbrOfArgsMiddlewarePort->setNext(portHandler);
+    _routes["PORT"] = nbrOfArgsMiddlewarePort;
 }

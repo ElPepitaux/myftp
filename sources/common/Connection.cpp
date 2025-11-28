@@ -70,3 +70,35 @@ void Connection::setAuthenticated(bool isAuthenticated) noexcept
 {
     _isAuthenticated = isAuthenticated;
 }
+
+Connection::MODE Connection::getMode() const noexcept
+{
+    return _mode;
+}
+
+void Connection::setMode(MODE mode) noexcept
+{
+    _mode = mode;
+}
+
+
+void Connection::setDataAddress(const std::string& address) noexcept
+{
+    _dataAddress = address;
+}
+
+void Connection::setDataPort(uint16_t port) noexcept
+{
+    _dataPort = port;
+}
+
+const std::string& Connection::getDataAddress() const noexcept
+{
+    return _dataAddress;
+}
+
+uint16_t Connection::getDataPort() const noexcept
+{
+    return _dataPort;
+}
+

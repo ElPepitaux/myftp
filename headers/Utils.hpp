@@ -9,7 +9,7 @@
 
 #include <string>
 #include <vector>
-#include <sstream> 
+#include <sstream>
 
 class Utils {
     public:
@@ -17,6 +17,7 @@ class Utils {
         ~Utils() = default;
 
         static std::vector<std::string> splitStringWhitespace(const std::string& str);
+        static std::vector<std::string> splitString(const std::string& str, char delimiter);
 
     protected:
     private:
