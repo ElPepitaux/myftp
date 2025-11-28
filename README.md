@@ -16,8 +16,8 @@
 
 ## Server Side
 
-- [x] USER <username>
-- [ ] PASS <password>
+- [x] USER <username>   Only anonymous user is allowed
+- [x] PASS <password>   Any password is accepted for anonymous user
 - [ ] CWD <directory>
 - [ ] LIST
 - [ ] RETR <filename>
