@@ -26,4 +26,6 @@ void ServerChainResponsibility::setupRoutes()
     auto portHandler = std::make_shared<PortHandler>();
     nbrOfArgsMiddlewarePort->setNext(portHandler);
     _routes["PORT"] = nbrOfArgsMiddlewarePort;
+    _routes["PASS"] = std::make_shared<PassHandler>();
+    _routes["LIST"] = std::make_shared<ListHandler>();
 }
