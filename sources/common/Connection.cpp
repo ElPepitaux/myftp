@@ -7,17 +7,34 @@
 
 #include "Connection.hpp"
 
-Connection::Connection(boost::asio::ip::tcp::socket socket)
-    : _socket(std::move(socket))
+void Connection::init()
 {
     _isAuthenticated = false;
     _mode = MODE::NONE;
     _readBuffer.resize(1024);
 }
 
+Connection::Connection(boost::asio::ip::tcp::socket socket)
+    : _io_context(static_cast<boost::asio::io_context&>(socket.get_executor().context())),
+      _socket(std::move(socket)),
+      _dataAcceptor(_io_context)
+{
+    init();
+}
+
+Connection::Connection(boost::asio::io_context& io_context, boost::asio::ip::tcp::socket socket)
+    : _io_context(io_context),
+      _socket(std::move(socket)),
+      _dataAcceptor(io_context)
+{
+    init();
+}
+
 Connection::~Connection()
 {
-    _socket.close();
+    boost::system::error_code ec;
+    _socket.close(ec);
+    _dataAcceptor.close(ec);
 }
 
 void Connection::write(const std::string &data)
@@ -57,9 +74,12 @@ void Connection::read()
     );
 }
 
+
 void Connection::close()
 {
-    _socket.close();
+    boost::system::error_code ec;
+    _socket.close(ec);
+    _dataAcceptor.close(ec);
 }
 
 bool Connection::isAuthenticated() const noexcept
@@ -82,7 +102,6 @@ void Connection::setMode(MODE mode) noexcept
     _mode = mode;
 }
 
-
 void Connection::setDataAddress(const std::string& address) noexcept
 {
     _dataAddress = address;
@@ -103,3 +122,27 @@ uint16_t Connection::getDataPort() const noexcept
     return _dataPort;
 }
 
+boost::asio::ip::tcp::acceptor& Connection::getDataAcceptor() noexcept
+{
+    return _dataAcceptor;
+}
+
+void Connection::setDataAcceptor(boost::asio::ip::tcp::acceptor acceptor) noexcept
+{
+    _dataAcceptor = std::move(acceptor);
+}
+
+bool Connection::hasDataAcceptor() const noexcept
+{
+    return _dataAcceptor.is_open();
+}
+
+void Connection::setPasvEndpoint(const boost::asio::ip::tcp::endpoint& ep) noexcept
+{
+    _pasvEndpoint = ep;
+}
+
+const boost::asio::ip::tcp::endpoint& Connection::getPasvEndpoint() const noexcept
+{
+    return _pasvEndpoint;
+}

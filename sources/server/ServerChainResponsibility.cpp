@@ -24,6 +24,9 @@ void ServerChainResponsibility::setupRoutes()
 
     _routes["PASS"] = std::make_shared<PassHandler>();
 
+
+    _routes["PASV"] = std::make_shared<PasvHandler>();
+
     auto authMiddlewareUser = std::make_shared<AuthenticationMiddleware>();
     auto nbrOfArgsMiddlewarePort = std::make_shared<NbrOfArgumentsMiddleware>(2);
     auto portHandler = std::make_shared<PortHandler>();
