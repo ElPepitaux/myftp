@@ -16,6 +16,7 @@
 #include "server/commands/StorHandler.hpp"
 #include "server/commands/PasvHandler.hpp"
 #include "server/commands/RetrHandler.hpp"
+#include "server/commands/HelpHandler.hpp"
 
 class ServerChainResponsibility : public ChainResponsibility {
     public:
