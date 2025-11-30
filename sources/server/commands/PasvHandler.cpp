@@ -45,7 +45,7 @@ void PasvHandler::handle(const std::vector<std::string>& request, Connection& co
     connection.write(oss.str());
 
     std::cout << "Passive mode set up on "
-              << addr.to_string() << ":" << port << std::endl;  
+              << addr.to_string() << ":" << port << std::endl;
     // Update connection mode
     connection.setMode(Connection::MODE::PASSIVE);
     connection.setDataAddress(addr.to_string());
