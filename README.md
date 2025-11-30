@@ -22,11 +22,11 @@
 - [X] LIST
 - [ ] RETR <filename>
 - [X] STOR <filename>
-- [ ] DELE <filename>
-- [ ] QUIT
+- [X] DELE <filename>
+- [X] QUIT
 - [X] PASV
 - [X] PORT <host-port> (host-port: h1,h2,h3,h4,p1,p2)
-- [ ] HELP
+- [X] HELP
 
 
 ### Middleware Made

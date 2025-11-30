@@ -18,6 +18,7 @@
 #include "server/commands/RetrHandler.hpp"
 #include "server/commands/HelpHandler.hpp"
 #include "server/commands/QuitHandler.hpp"
+#include "server/commands/DeleHandler.hpp"
 
 class ServerChainResponsibility : public ChainResponsibility {
     public:
