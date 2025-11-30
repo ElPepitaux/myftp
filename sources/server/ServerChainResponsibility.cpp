@@ -47,4 +47,11 @@ void ServerChainResponsibility::setupRoutes()
     authMiddlewareStor->setNext(chooseModeMiddlewareStor);
     chooseModeMiddlewareStor->setNext(storHandler);
     _routes["STOR"] = authMiddlewareStor;
+
+    auto authMiddlewareRetr = std::make_shared<AuthenticationMiddleware>();
+    auto chooseModeMiddlewareRetr = std::make_shared<ChooseModeMiddleware>();
+    auto retrHandler = std::make_shared<RetrHandler>();
+    authMiddlewareRetr->setNext(chooseModeMiddlewareRetr);
+    chooseModeMiddlewareRetr->setNext(retrHandler);
+    _routes["RETR"] = authMiddlewareRetr;
 }
