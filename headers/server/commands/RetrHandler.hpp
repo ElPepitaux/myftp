@@ -8,6 +8,7 @@
 #pragma once
 
 #include "server/ServerChainResponsibility.hpp"
+#include "Utils.hpp"
 
 class RetrHandler : public handler {
     public:
@@ -18,7 +19,7 @@ class RetrHandler : public handler {
 
     protected:
     private:
-        std::string _handlePassiveMode(Connection& connection, const std::string& filename);
-        std::string _handleActiveMode(Connection& connection, const std::string& filename);
+        void _handlePassiveMode(Connection& connection, const std::string& filename);
+        void _handleActiveMode(Connection& connection, const std::string& filename);
 };
 

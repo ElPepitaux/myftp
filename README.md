@@ -20,7 +20,7 @@
 - [x] PASS <password>   Any password is accepted for anonymous user
 - [x] CWD <directory>
 - [X] LIST
-- [ ] RETR <filename>
+- [X] RETR <filename>
 - [X] STOR <filename>
 - [X] DELE <filename>
 - [X] QUIT
