@@ -28,6 +28,8 @@ void ServerChainResponsibility::setupRoutes()
 
     _routes["HELP"] = std::make_shared<HelpHandler>();
 
+    _routes["QUIT"] = std::make_shared<QuitHandler>();
+
     auto authMiddlewareUser = std::make_shared<AuthenticationMiddleware>();
     auto nbrOfArgsMiddlewarePort = std::make_shared<NbrOfArgumentsMiddleware>(2);
     auto portHandler = std::make_shared<PortHandler>();

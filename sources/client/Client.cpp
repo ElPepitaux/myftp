@@ -62,7 +62,9 @@ void Client::run()
     while (_isConnected) {
         std::string input;
         std::getline(std::cin, input);
-        if (input == "exit") {
+        if (input == "exit" || input == "QUIT") {
+            input = "QUIT\r\n";
+            _connection->write(input);
             close();
             break;
         }

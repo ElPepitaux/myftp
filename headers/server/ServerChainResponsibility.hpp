@@ -17,6 +17,7 @@
 #include "server/commands/PasvHandler.hpp"
 #include "server/commands/RetrHandler.hpp"
 #include "server/commands/HelpHandler.hpp"
+#include "server/commands/QuitHandler.hpp"
 
 class ServerChainResponsibility : public ChainResponsibility {
     public:
